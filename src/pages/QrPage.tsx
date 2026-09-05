@@ -4,22 +4,17 @@ import QRCode from "qrcode";
 import { ArrowLeft, Check, Copy, Download, ExternalLink, Link2, Printer, Sparkles } from "lucide-react";
 import { BUSINESS } from "../lib/data";
 import { GOOGLE_REVIEW_URL, OWNER_MAPS_LINK, copyToClipboard } from "../lib/google";
-import { savedQrUrl, saveQrUrl } from "../lib/store";
 import { Brand, Note, PrimaryButton, Screen, SecondaryButton, Shell } from "../components/ui";
 
 const QR_COLORS = { dark: "#0b1020", light: "#ffffff" };
 
 export default function QrPage() {
-  const [url, setUrl] = useState("");
+  /** Fixed destination — the address must never change once the code is printed. */
+  const url = BUSINESS.reviewPage;
   const [svg, setSvg] = useState("");
-  const [status, setStatus] = useState<"idle" | "saved" | "copied">("idle");
+  const [status, setStatus] = useState<"idle" | "copied">("idle");
 
   useEffect(() => {
-    setUrl(savedQrUrl() ?? `${window.location.origin}/`);
-  }, []);
-
-  useEffect(() => {
-    if (!url) return;
     let alive = true;
     QRCode.toString(url, {
       type: "svg",
@@ -63,12 +58,6 @@ export default function QrPage() {
     a.download = "saket-review-qr.svg";
     a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 1500);
-  };
-
-  const save = () => {
-    saveQrUrl(url.trim());
-    setStatus("saved");
-    setTimeout(() => setStatus("idle"), 1800);
   };
 
   const copyLink = async () => {
@@ -116,36 +105,23 @@ export default function QrPage() {
             <p className="text-center text-[10.5px] font-semibold text-[#0b1020]/55">
               {BUSINESS.name} · Google Reviews
             </p>
+            <p className="text-center text-[10px] leading-relaxed font-medium text-[#0b1020]/45">
+              Open your camera, scan the code, and tell us how we did.
+            </p>
           </div>
         </div>
 
         <div className="mt-5">
-          <label
-            htmlFor="qr-url"
-            className="mb-1.5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-mist"
-          >
-            <Link2 className="h-3.5 w-3.5 text-gold" /> Address the QR points to
-          </label>
-          <div className="flex gap-2">
-            <input
-              id="qr-url"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              spellCheck={false}
-              className="h-12 min-w-0 flex-1 rounded-2xl border border-line bg-white/[0.04] px-3.5 text-[13px] text-white outline-none focus:border-gold/50"
-            />
-            <button
-              type="button"
-              onClick={save}
-              className="tap h-12 shrink-0 rounded-2xl border border-line bg-white/[0.04] px-4 text-[13px] font-bold text-white transition-colors hover:bg-white/[0.08]"
-            >
-              {status === "saved" ? <Check className="h-4 w-4 text-mint" /> : "Save"}
-            </button>
+          <p className="mb-1.5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-mist">
+            <Link2 className="h-3.5 w-3.5 text-gold" /> This code always opens
+          </p>
+          <div className="rounded-2xl border border-line bg-white/[0.04] px-3.5 py-3.5">
+            <p className="break-all text-[13px] leading-relaxed text-white/85">{url}</p>
           </div>
           <div className="mt-2.5">
             <Note>
-              Free hosting on this domain — the code never changes. Use your own
-              domain here if you prefer.
+              Fixed on purpose — print it once and it keeps working. The page
+              only opens from this address or the QR code.
             </Note>
           </div>
         </div>

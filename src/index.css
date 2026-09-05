@@ -103,6 +103,10 @@
 }
 
 @media print {
+  @page {
+    margin: 14mm;
+  }
+
   body * {
     visibility: hidden;
   }
@@ -115,6 +119,14 @@
     left: 0;
     top: 0;
     width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
     background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 }

@@ -5,7 +5,6 @@
 
 const HIST_KEY = "spm_hist_v1";
 const LAST_KEY = "spm_last_v1";
-const URL_KEY = "spm_qr_url_v1";
 const MAX_HISTORY = 40;
 
 export interface HistoryEntry {
@@ -46,14 +45,6 @@ export function rememberReview(entry: HistoryEntry) {
 
 export function lastReview(): HistoryEntry | null {
   return safeRead<HistoryEntry | null>(LAST_KEY, null);
-}
-
-export function savedQrUrl(): string | null {
-  return safeRead<string | null>(URL_KEY, null);
-}
-
-export function saveQrUrl(url: string) {
-  safeWrite(URL_KEY, url);
 }
 
 export function normalize(text: string): string {

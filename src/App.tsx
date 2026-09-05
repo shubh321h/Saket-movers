@@ -8,8 +8,8 @@ export default function App() {
       <div className="aura" aria-hidden="true" />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<ReviewFlow />} />
-          <Route path="/review" element={<Navigate to="/" replace />} />
+          <Route path="/" element={<Navigate to="/review" replace />} />
+          <Route path="/review" element={<ReviewFlow />} />
           <Route path="/qr" element={<QrPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

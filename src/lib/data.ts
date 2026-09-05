@@ -34,6 +34,8 @@ export const BUSINESS = {
   mapsShortLink: "https://maps.app.goo.gl/pS6FZHudLgQkaoXh7",
   /** Derived from the CID inside the owner's Maps link and verified against it. */
   placeId: "ChIJA4Rb4RYHmjkRgRUAjvI9Mg8",
+  /** Where the printed QR points — the review page on the existing website. */
+  reviewPage: "https://saketpackers.vercel.app/review",
 };
 
 export const SERVICES: ServiceOption[] = [
